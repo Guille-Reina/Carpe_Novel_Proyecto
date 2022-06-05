@@ -54,6 +54,7 @@ if(isset($_GET['txteleccion'])){
                     <button type="submit" name="txteleccion" value="comment" class="btn btn-light">Con más reseñas</button>
                     <button type="submit" name="txteleccion" value="fav" class="btn btn-light">Con más colecciones</button>
                     <button type="submit" name="txteleccion" value="like" class="btn btn-light">Con más like</button>
+                  
                   </form>
                 </fieldset>
             </div>
