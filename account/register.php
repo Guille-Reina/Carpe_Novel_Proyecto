@@ -61,9 +61,6 @@
                             </form>
                             <hr>
                             <div class="text-center">
-                                <a class="small" href="forgot-password.php">¿Te has olvidado la contraseña?</a>
-                            </div>
-                            <div class="text-center">
                                 <a class="small" href="login.php">¿Ya estas registrado? ¡Logueate!</a>
                             </div>
                         </div>

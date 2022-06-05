@@ -13,7 +13,6 @@ $sentenciaSQL->execute();
 
 
 $txtTitle =(isset($_POST['txtTitle']))?$_POST['txtTitle']:"";
-$posicion =(isset($_POST['posicion']))?$_POST['posicion']:"";
 $text=(isset($_POST['text']))?$_POST['text']:"";
 
 $accion=(isset($_POST['accion']))?$_POST['accion']:"";
@@ -22,41 +21,43 @@ $accion=(isset($_POST['accion']))?$_POST['accion']:"";
 switch($accion){
 
     case "Crear":
-        $numorden = $listacapitulo['Orden'];
+        $posicion = (isset($_POST['posicion']))?$_POST['posicion']:"";
         $tipo="Comic";
-        $sentenciaSQL= $conexion->prepare("INSERT INTO `chapter` (`Title`, `ID_Content`, `Tipo`, `Contenido`, 'Fecha', 'Orden') VALUES (:titulo, :id_Content, :tipo, :txt, NOW(), :orden);");
+        $sentenciaSQL= $conexion->prepare("INSERT INTO chapter (Title, ID_Content, Tipo, Contenido, Fecha, Orden) VALUES (:titulo, :id_Content, :tipo, :txt, NOW(), :orden);");
         $sentenciaSQL->bindParam(':id_Content',$txtid);
-        $sentenciaSQL->bindParam(':titulo',$txtTitulo);
+        $sentenciaSQL->bindParam(':titulo',$txtTitle);
         $sentenciaSQL->bindParam(':tipo',$tipo);
         $sentenciaSQL->bindParam(':orden',$posicion);
+        $contenido="";
         if (isset($_FILES['imagen'])){
 	
-            $cantidad= count($_FILES["imagen"]["tmp_name"]);
+           echo $cantidad= count($_FILES["imagen"]["tmp_name"]);
             
             for ($i=0; $i<$cantidad; $i++){
+                echo $i;
             
             if ($_FILES['imagen']['type'][$i]=='image/png' || $_FILES['imagen']['type'][$i]=='image/jpeg'){
-            
-            //Subimos el fichero al servidor
+            echo "aqui";
             $fecha= new Datetime();
-            $nombreArchivo =($_FILES['imagen']!="")?$fecha->getTimestamp()."_".$_FILES["imagen"]["name"]:"portada.png";
+            $nombreArchivo =($_FILES['imagen']!="")?$fecha->getTimestamp()."_".$_FILES["imagen"]["name"][$i]:"portada.png";
             
-            $tmpImagen=$_FILES["imagen"]["tmp_name"];
+            $tmpImagen=$_FILES["imagen"]["tmp_name"][$i];
             
             if($tmpImagen!=""){
                 move_uploaded_file($tmpImagen,"../../img/contenido/".$nombreArchivo);
             }
-            $validar=true;
+            
             }
-            else{ $validar=false; }
-        
-        
-            $sentenciaSQL->bindParam(':txt',$nombreArchivo);
+           
+            $contenido .= $nombreArchivo.",";
+
+            }
+            $sentenciaSQL->bindParam(':txt',$contenido);
             $sentenciaSQL->execute();
             
+        
         }
-        }
-        header("Location:informacion_chapter?txtid=$txtid.php");
+        header("Location:information.php?txtid=$txtid");
         break;
 }
 
@@ -85,7 +86,7 @@ switch($accion){
     <div class="container px-5">
         <a class="nav-item nav-link active" href="<?php echo $url;?>/administrador/seccion/information.php?txtid=<?php echo $txtid ?>"> <i class="fas fa-chevron-left"></i> Atras</a>
         <div class="btn-group" role="group">
-            <a><button type="button" class="btn btn-info">Guardar</button></a>
+            <a><button type="submit" name= "accion" class="btn btn-info" value="Crear">Guardar</button></a>
         </div>
     </div>
 </nav>

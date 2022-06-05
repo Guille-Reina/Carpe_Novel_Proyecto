@@ -1,4 +1,15 @@
 <?php
+class Password {
+    const SALT = 'EstoEsUnSalt';
+    public static function hash($password) {
+        return hash('sha512', self::SALT . $password);
+    }
+    public static function verify($password, $hash) {
+        return ($hash == self::hash($password));
+    }
+}
+
+
 session_start();
 error_reporting(0);
 
@@ -23,13 +34,13 @@ include("../administrador/config/bd.php");
 switch($accion){
     case "Registrar":
         if ($contrasenia1 == $contrasenia2){
-            $fecha = date('m-d-Y h:i:s a', time());  
+            $hash = Password::hash($contrasenia1);
             $sentenciaSQL= $conexion->prepare("INSERT INTO `privatemembersdata` ( `Name`, `Surname`, `Picture`, `Password`, `Usuario`, `Emails`) VALUES (:nombre, :apellido, :imagen, :contrasenia, :usuario, :user_email);");
             $sentenciaSQL->bindParam(':nombre',$nombre);
             $sentenciaSQL->bindParam(':apellido',$apellido);
             $sentenciaSQL->bindParam(':usuario',$usuario);
             $sentenciaSQL->bindParam(':user_email',$user_email);
-            $sentenciaSQL->bindParam(':contrasenia',$contrasenia1);
+            $sentenciaSQL->bindParam(':contrasenia',$hash);
 
             $nombreArchivo = 'undraw_profile.svg';
             $sentenciaSQL->bindParam(':imagen',$nombreArchivo);
@@ -51,8 +62,8 @@ switch($accion){
                 $contenido=$sentenciaSQL->fetch(PDO::FETCH_BOTH);
                 $passok = $contenido["Password"];
                 $id = $contenido["ID"];
-
-                if(($passok == $pass)){
+                $hash = Password::hash($pass);
+                if(($passok == $hash )){
                     $_SESSION['signed_in'] = true;
                     $_SESSION['Usuario'] =$usuario;
                     $_SESSION['user_id'] =$id;

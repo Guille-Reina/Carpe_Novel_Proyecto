@@ -73,7 +73,27 @@ if($accion == "Enviar"){
     <table class="table table">
     <tbody>
             <tr  rowspan="2">
-                <p class="text-justify"><?php echo $listacapitulo['Contenido']; ?></p>
+                <p class="text-justify">
+                    
+                <?php 
+                if ($tipo == 'Novela'){
+                    echo $listacapitulo['Contenido'];
+                }
+                if($tipo == 'Comic'){
+                    $separador= ",";
+                    $separada = explode($separador, $listacapitulo['Contenido']);
+
+
+                    foreach ($separada as $result) { ?>
+                        <img src="../../img/contenido/<?php echo $result; ?>" width="100%" alt="">
+                    <?php } 
+
+                }
+                
+                ?>
+            
+            
+                </p>
                 <br/><br/><br/>
             </tr>
             <?php 

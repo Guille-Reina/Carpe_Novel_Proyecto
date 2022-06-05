@@ -7,32 +7,32 @@ $sentenciaSQL= $conexion->prepare("SELECT * FROM categorias");
 $sentenciaSQL->execute();
 $listacategorias=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 
-$accion=(isset($_POST['txteleccion']))?$_POST['txteleccion']:"";
+$accion=(isset($_GET['txteleccion']))?$_GET['txteleccion']:"";
 
 
 if(isset($_GET['txteleccion'])){
   if($accion == "fav"){
-    $sentenciaSQL= $conexion->prepare("SELECT * FROM contenido, fav ORDER BY COUNT(fav.ID_Content)  DESC");
+    $sentenciaSQL= $conexion->prepare("SELECT contenido.*, (SELECT count(*) FROM fav WHERE contenido.id = fav.ID_content) AS numFav FROM contenido order by numFav desc;");
     $sentenciaSQL->execute();
     $listacontenido=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
   }
   if($accion == "comment"){
-    $sentenciaSQL= $conexion->prepare("SELECT * FROM contenido, comments ORDER BY COUNT('comments.Post ID') DESC");
+    $sentenciaSQL= $conexion->prepare("SELECT contenido.*, (SELECT count(*) FROM comments WHERE contenido.id = 'comments.Post ID') AS numFav FROM contenido order by numFav desc;");
     $sentenciaSQL->execute();
     $listacontenido=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
   }
   if($accion == "chapter"){
-    $sentenciaSQL= $conexion->prepare("SELECT * FROM contenido, chapter ORDER BY COUNT(chapter.ID_Content) DESC");
+    $sentenciaSQL= $conexion->prepare("SELECT contenido.*, (SELECT count(*) FROM chapter WHERE contenido.id = chapter.ID_Content) AS numFav FROM contenido order by numFav desc;");
     $sentenciaSQL->execute();
     $listacontenido=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
   }
   if($accion == "like"){
-    $sentenciaSQL= $conexion->prepare("SELECT * FROM contenido, Score ORDER BY COUNT(Score.ID_Content ) DESC");
+    $sentenciaSQL= $conexion->prepare("SELECT contenido.*, (SELECT count(*) FROM Score WHERE contenido.id = Score.ID_Content) AS numFav FROM contenido order by numFav desc;");
     $sentenciaSQL->execute();
     $listacontenido=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
   }
  } else {
-
+   
   $sentenciaSQL= $conexion->prepare("SELECT * FROM contenido");
   $sentenciaSQL->execute();
   $listacontenido=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);

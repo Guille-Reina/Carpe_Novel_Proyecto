@@ -2,6 +2,16 @@
 
 include ("../../administrador/config/bd.php");
 
+class Password {
+  const SALT = 'EstoEsUnSalt';
+  public static function hash($password) {
+      return hash('sha512', self::SALT . $password);
+  }
+  public static function verify($password, $hash) {
+      return ($hash == self::hash($password));
+  }
+}
+
 $usuario = $_SESSION['Usuario'];
 $sentenciaSQL= $conexion->prepare("SELECT * FROM privatemembersdata WHERE Usuario = :usuario ");
 $sentenciaSQL->bindParam(':usuario',$usuario);
@@ -29,14 +39,14 @@ if (isset($_POST['accion'])) {
 
     if (isset($_POST['contrasenia1']) && $_POST['contrasenia1']!=""){$txtpassword =$_POST['contrasenia1'];}
 
-
+    $hash = Password::hash($txtpassword);
     $sentenciaSQL= $conexion->prepare("UPDATE privatemembersdata SET Name = :name, Surname = :surname, Password = :password, Comments = :comment, Emails = :email WHERE id=:id");
     $sentenciaSQL->bindParam(':id',$txtID);
     $sentenciaSQL->bindParam(':name',$txtName);
     $sentenciaSQL->bindParam(':surname',$txtSurname);
     $sentenciaSQL->bindParam(':email',$txtEmail);
     $sentenciaSQL->bindParam(':comment',$txtcomment);
-    $sentenciaSQL->bindParam(':password',$txtpassword);
+    $sentenciaSQL->bindParam(':password',$hash);
     $sentenciaSQL->execute();
 
 

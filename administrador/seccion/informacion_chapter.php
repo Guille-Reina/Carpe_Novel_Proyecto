@@ -21,37 +21,12 @@ if($accion == "favorito"){
 }
 
 if(isset($_POST['score'])){
-  $usuario = $_SESSION['Usuario'];
-  $score = (isset($_POST['score']))?$_POST['score']:"";
+    $usuario = $_SESSION['Usuario'];
+    $score = (isset($_POST['score']))?$_POST['score']:"";
 
-  $contar= $conexion->prepare("SELECT COUNT(*) FROM score WHERE Usuario=:usuario");
-  $contar->bindParam(':usuario',$usuario);
-  $contar->execute();
-  $numContar=$contar->fetchAll(PDO::FETCH_ASSOC);
-
-
-  if($numContar != '0'){
     if($score == "up"){
       $numscore = '10';
-      $sentenciaSQL= $conexion->prepare("UPDATE score SET Score=:score WHERE ID_Content=:id and Usuario=:usuario");
-      $sentenciaSQL->bindParam(':usuario',$usuario);
-      $sentenciaSQL->bindParam(':score',$numscore);
-      $sentenciaSQL->bindParam(':id',$txtid);
-      $sentenciaSQL->execute();
-    }
-    if($score == "down"){
-      $numscore = '0';
-      $sentenciaSQL= $conexion->prepare("UPDATE score SET Score=:score WHERE ID_Content=:id and Usuario=:usuario");
-      $sentenciaSQL->bindParam(':usuario',$usuario);
-      $sentenciaSQL->bindParam(':id',$txtid);
-      $sentenciaSQL->bindParam(':score',$numscore);
-      $sentenciaSQL->execute();
-    }
-    
-  } else {
-    if($score == "up"){
-      $numscore = '10';
-      $sentenciaSQL= $conexion->prepare("INSERT INTO `score` (`Score`, `Usuario`, `ID_content`) VALUES (:score, :usuario, :id_Content);");
+      $sentenciaSQL= $conexion->prepare("INSERT INTO score (Score, Usuario, ID_content) VALUES (:score, :usuario, :id_Content);");
       $sentenciaSQL->bindParam(':id_Content',$txtid);
       $sentenciaSQL->bindParam(':usuario',$usuario);
       $sentenciaSQL->bindParam(':score',$numscore);
@@ -59,21 +34,21 @@ if(isset($_POST['score'])){
     }
     if($score == "down"){
       $numscore = '0';
-      $sentenciaSQL= $conexion->prepare("INSERT INTO `score` (`Score`, `Usuario`, `ID_content`) VALUES (:score, :usuario, :id_Content);");
+      $sentenciaSQL= $conexion->prepare("INSERT INTO score (Score, Usuario, ID_content) VALUES (:score, :usuario, :id_Content);");
       $sentenciaSQL->bindParam(':id_Content',$txtid);
       $sentenciaSQL->bindParam(':usuario',$usuario);
       $sentenciaSQL->bindParam(':score',$numscore);
       $sentenciaSQL->execute();
     }
 
-  }
+  
 }
 
 $contar= $conexion->prepare("SELECT COUNT(*) FROM score");
 $contar->execute();
 $numscore=$contar->fetchAll(PDO::FETCH_BOTH);
 
-$contar= $conexion->prepare("SELECT SUM('Score') FROM score");
+$contar= $conexion->prepare("SELECT SUM(Score) FROM score");
 $contar->execute();
 $totalparticular=$contar->fetchAll(PDO::FETCH_BOTH);
 
@@ -107,6 +82,7 @@ $img = $informacion['Image'];
 
 
 ?>
+
 
 <div class="col-12">
   <br/><br/>

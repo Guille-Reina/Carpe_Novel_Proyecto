@@ -149,8 +149,8 @@ $category = $informacion['Categoria'];
                   <a><?php echo $comics['Title'] ?></a>
                 </th>
                 <th scope="col">
-                  <input type="hidden" name="txtid_chapter" id="txtid_chapter" value="<?php echo $comics['ID_Chapter']; ?>" />
-                  <a type="submit" name="accion" id="accion" value="eliminar">Eliminar</a>
+                  <input type="hidden" name="txtid_chapter" id="txtid_chapter" value="<?php echo $novelas['ID_Chapter']; ?>" />
+                  <a ><button type="submit" class="btn btn-outline-danger" name= "accion" value="eliminar">Eliminar</button></a>
                 </th>
               </form>
               </tr>
