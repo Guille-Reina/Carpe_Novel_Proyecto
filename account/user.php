@@ -8,8 +8,6 @@ class Password {
         return ($hash == self::hash($password));
     }
 }
-
-
 session_start();
 error_reporting(0);
 
@@ -35,16 +33,15 @@ switch($accion){
     case "Registrar":
         if ($contrasenia1 == $contrasenia2){
             $hash = Password::hash($contrasenia1);
-            $sentenciaSQL= $conexion->prepare("INSERT INTO `privatemembersdata` ( `Name`, `Surname`, `Picture`, `Password`, `Usuario`, `Emails`) VALUES (:nombre, :apellido, :imagen, :contrasenia, :usuario, :user_email);");
+            $sentenciaSQL= $conexion->prepare("INSERT INTO privatemembersdata ( Name, Surname, Picture, Password, Usuario, Emails) VALUES (:nombre, :apellido, :imagen, :contrasenia, :usuario, :user_email);");
             $sentenciaSQL->bindParam(':nombre',$nombre);
             $sentenciaSQL->bindParam(':apellido',$apellido);
             $sentenciaSQL->bindParam(':usuario',$usuario);
             $sentenciaSQL->bindParam(':user_email',$user_email);
             $sentenciaSQL->bindParam(':contrasenia',$hash);
-
             $nombreArchivo = 'undraw_profile.svg';
             $sentenciaSQL->bindParam(':imagen',$nombreArchivo);
-            $sentenciaSQL->execute();
+            //$sentenciaSQL->execute();
             header("Location:login.php");
         } else{
             $mensaje="Error: Las contraseñas no coinciden";

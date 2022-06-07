@@ -1,5 +1,4 @@
-<?php include 'user.php' ?>
-
+<?php include 'user.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 
