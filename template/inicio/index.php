@@ -4,20 +4,22 @@
 
 
 
-$sentenciaSQL= $conexion->prepare("SELECT * FROM contenido ORDER BY 'Published Date' ASC");
+$sentenciaSQL= $conexion->prepare("SELECT * FROM contenido ORDER BY 'Published Date' ASC limit 5");
 $sentenciaSQL->execute();
 $todofechacontenido=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 
 
 ?>
 <div>
-            <div class="jumbotron">
-                <h1 class="display-3">Bienvenido a nuestra página Web</h1>
-                <hr class="my-2">
-				<p>Esta página te ofrece todo lo necesario para convertirse en un escritor <strong>Web</strong></p>
-            </div>
+    <div class="jumbotron">
+        <h1 class="display-3">Bienvenido a nuestra página Web</h1>
+        <hr class="my-2">
+		<p>Esta página te ofrece todo lo necesario para convertirse en un escritor <strong>Web</strong></p>
+    </div>
 
-            <h4>Recientemente Añadidos</h4>
+    <h4>Recientemente Añadidos</h4>
+    <div class="container-fluid">
+        <div class="row">
 			<div class="card-group">
 				<?php foreach($todofechacontenido as $fechacontenido) { ?>   
 				<div class="card">
@@ -29,6 +31,8 @@ $todofechacontenido=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 				</div>
 				<?php } ?> 
 			</div>
+        </div>
+    </div>
 			<br/><br/><br/>
                 <div class="container-fluid">
                     <div class="card shadow mb-4">

@@ -41,7 +41,7 @@ switch($accion){
             $sentenciaSQL->bindParam(':contrasenia',$hash);
             $nombreArchivo = 'undraw_profile.svg';
             $sentenciaSQL->bindParam(':imagen',$nombreArchivo);
-            //$sentenciaSQL->execute();
+            $sentenciaSQL->execute();
             header("Location:login.php");
         } else{
             $mensaje="Error: Las contraseñas no coinciden";
