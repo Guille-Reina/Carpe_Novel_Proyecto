@@ -14,7 +14,7 @@ $listalibrary=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 
 if($accion == "eliminar"){
     $txtid_chapter =(isset($_POST['txtid_content']))?$_POST['txtid_content']:"";
-    $sentenciaSQL= $conexion->prepare("DELETE FROM fav WHERE ID_content=:id");
+    $sentenciaSQL= $conexion->prepare("DELETE FROM fav WHERE ID=:id");
     $sentenciaSQL->bindParam(':id',$txtid_chapter);
     $sentenciaSQL->execute();
     
@@ -32,7 +32,7 @@ if($accion == "eliminar"){
                 <p class="card-title"><?php echo $library['Title'] ?></p>
                 <div class="row">
                     <div class="col-6">
-                        <a href="<?php echo $url;?>/administrador/seccion/informacion_chapter.php?txtid=<?php echo $library['ID']; ?>"><button  class="btn btn-primary">Ver</button></a>
+                        <a href="<?php echo $url;?>/administrador/seccion/informacion_chapter.php?txtid=<?php echo $library['ID_content']; ?>"><button  class="btn btn-primary">ver</button></a>
                     </div>
                     <div class="col-6">
                         <form method="POST">    

@@ -52,7 +52,7 @@ $informacionerrores=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 							<?php foreach($informacionerrores as $informacion) { ?>   
               <tr>
 								<td>          
-									<a><?php echo $informacion['Usuario']; ?></a>
+									<a><?php echo $informacion['Chapter']; ?></a>
                 </td>
                 <td><?php echo $informacion['Usuario']; ?></td>
                 <td><?php echo $informacion['Contenido']; ?></td>

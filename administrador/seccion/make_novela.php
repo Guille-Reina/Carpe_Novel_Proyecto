@@ -26,7 +26,7 @@ switch($accion){
         $posicion =(isset($_POST['posicion']))?$_POST['posicion']:"";
         $text=(isset($_POST['text']))?$_POST['text']:"";
         $tipo="Novela";
-        $sentenciaSQL= $conexion->prepare("INSERT INTO `chapter` (`Title`, `ID_Content`, `Tipo`, `Contenido`, 'Fecha', 'Orden') VALUES (:titulo, :id_Content, :tipo, :txt, NOW(), :orden);");
+        $sentenciaSQL= $conexion->prepare("INSERT INTO chapter (Title, ID_Content, Tipo, Contenido, Fecha, Orden) VALUES (:titulo, :id_Content, :tipo, :txt, NOW(), :orden);");
         $sentenciaSQL->bindParam(':id_Content',$txtid);
         $sentenciaSQL->bindParam(':titulo',$txtTitle);
         $sentenciaSQL->bindParam(':tipo',$tipo);

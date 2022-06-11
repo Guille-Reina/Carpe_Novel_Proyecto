@@ -4,7 +4,7 @@
 
 
 
-$sentenciaSQL= $conexion->prepare("SELECT * FROM contenido ORDER BY 'Published Date' ASC limit 5");
+$sentenciaSQL= $conexion->prepare("SELECT * FROM contenido ORDER BY 'Published Date' DESC limit 5");
 $sentenciaSQL->execute();
 $todofechacontenido=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 

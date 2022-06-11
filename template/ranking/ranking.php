@@ -27,7 +27,7 @@ if(isset($_GET['txteleccion'])){
     $listacontenido=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
   }
   if($accion == "like"){
-    $sentenciaSQL= $conexion->prepare("SELECT contenido.*, (SELECT count(*) FROM Score WHERE contenido.id = Score.ID_Content) AS numFav FROM contenido order by numFav desc;");
+    $sentenciaSQL= $conexion->prepare("SELECT contenido.*, (SELECT count(*) FROM score WHERE contenido.id = score.ID_Content) AS numFav FROM contenido order by numFav desc;");
     $sentenciaSQL->execute();
     $listacontenido=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
   }
